@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  '주문 시작!',
+                  '게임 시작!',
                   style: theme.textTheme.bodyText1,
                 ),
               ),

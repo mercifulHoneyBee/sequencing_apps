@@ -79,23 +79,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         for (int i = 0; i < dropdownValue; i++)
-                        TextField(
-                          onSubmitted: (Name) {
-                            setState(() {
-                              name = Name;
-                              names.add(name);
-                            });
-                          },
-                          cursorColor: Colors.black,
-                          decoration: InputDecoration(
-                            hintText: '이름을 적어주세요',
+                          TextField(
+                            onSubmitted: (Name) {
+                              setState(() {
+                                name = Name;
+                                names.add(name);
+                              });
+                            },
+                            cursorColor: Colors.black,
+                            decoration: InputDecoration(
+                              hintText: '이름을 적어주세요',
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ],
                 ),
-                _BottomPart(dropdownValue: dropdownValue, names: names,),
+                _BottomPart(
+                  dropdownValue: dropdownValue,
+                  names: names,
+                ),
               ],
             ),
           ),
@@ -114,25 +117,64 @@ class _BottomPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: Colors.orange,
-      ),
-      onPressed: () async {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) {
-            return GameScreen(
-              dropdownValue: dropdownValue,
-              names: names,
-            );
-          },
-        ));
-      },
-      child: Text(
-        '주문 완료!',
-        style: theme.textTheme.bodyText1,
-      ),
-    );
+    if (names.length == dropdownValue) {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.orange,
+        ),
+        onPressed: () async {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) {
+              return GameScreen(
+                dropdownValue: dropdownValue,
+                names: names,
+              );
+            },
+          ));
+        },
+        child: Text(
+          '조리 시작!',
+          style: theme.textTheme.bodyText1,
+        ),
+      );
+    } else {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.grey,
+        ),
+        onPressed: () {
+          AlertDialog alert = AlertDialog(
+            title: Text(
+              'ERROR'
+            ),
+            content: SingleChildScrollView(
+              child: Text(
+                '인원 수만큼 이름을 \'입력\' 후 \'저장\'해주세요'
+              ),
+            ),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.orange,
+                ),
+                  onPressed: (){
+                    Navigator.of(context).pop();},
+                  child: Center(
+                    child: Text(
+                      'OK'
+                    ),
+                  ))
+            ],
+          );
+          showDialog(context: context, builder: (BuildContext context){
+            return alert;
+          });
+        },
+        child: Text(
+          '조리 시작!',
+          style: theme.textTheme.bodyText1,
+        ),
+      );
+    }
   }
 }

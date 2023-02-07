@@ -5,17 +5,19 @@ import 'dart:math';
 class ResultScreen extends StatelessWidget {
   List<String> names;
   int dropdownValue;
+
   ResultScreen({required this.names,
     required this.dropdownValue,
     Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final rand = Random();
     names.shuffle();
     List<int> randnumbers = [];
-    while(randnumbers.length != dropdownValue){
-      randnumbers.add(rand.nextInt(16) + 4);
+    while (randnumbers.length != dropdownValue) {
+      randnumbers.add(rand.nextInt(12) + 3);
       randnumbers = randnumbers.toSet().toList();
     };
     randnumbers.sort();
@@ -27,19 +29,28 @@ class ResultScreen extends StatelessWidget {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (int i = 0; i < dropdownValue; i++)
-                    Text(
-                      '${i + 1}등 ${names[i]} : ${randnumbers[dropdownValue - i - 1]}cm',
-                      style: TextStyle(
-                        fontFamily: 'jua',
-                        fontSize: 45.0,
-                      ),
+                padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(color: Colors.black12, width: 10)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (int i = 0; i < dropdownValue; i++)
+                          Text(
+                            '${i + 1}등 ${names[i]} : ${randnumbers[dropdownValue -
+                                i - 1]}.${rand.nextInt(10)}cm',
+                            style: TextStyle(
+                              fontFamily: 'jua',
+                              fontSize: 40.0,
+                            ),
+                          ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -65,8 +76,8 @@ class ResultScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
-                      return HomeScreen();
-                    }));
+                          return HomeScreen();
+                        }));
                   },
                   child: Text(
                     '메인 화면',

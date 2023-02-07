@@ -27,7 +27,6 @@ class GameScreen extends StatelessWidget {
                     final rand = Random();
                     int number = rand.nextInt(16) + 4;
 
-
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (BuildContext context){
                         return ResultScreen(dropdownValue: dropdownValue, names: names,);
