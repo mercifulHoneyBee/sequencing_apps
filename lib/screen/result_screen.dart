@@ -3,23 +3,34 @@ import 'package:sequencing_apps/screen/home_screen.dart';
 import 'dart:math';
 
 class ResultScreen extends StatelessWidget {
-  List<String> names;
-  int dropdownValue;
+  final List<String> names;
+  final int dropdownValue, touch;
 
-  ResultScreen({required this.names,
-    required this.dropdownValue,
-    Key? key}) : super(key: key);
+  const ResultScreen(
+      {super.key,
+      required this.names,
+      required this.dropdownValue,
+      required this.touch});
+
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final rand = Random();
-    names.shuffle();
+    List<String> Names = names.toList();
+    Names.shuffle();
+    if (touch <= dropdownValue) {
+      String winner = names[touch - 1];
+      while (winner != Names[0]) {
+        Names.shuffle();
+      }
+    }
     List<int> randnumbers = [];
     while (randnumbers.length != dropdownValue) {
       randnumbers.add(rand.nextInt(12) + 3);
       randnumbers = randnumbers.toSet().toList();
-    };
+    }
+    ;
     randnumbers.sort();
 
     return Scaffold(
@@ -41,8 +52,7 @@ class ResultScreen extends StatelessWidget {
                       children: [
                         for (int i = 0; i < dropdownValue; i++)
                           Text(
-                            '${i + 1}등 ${names[i]} : ${randnumbers[dropdownValue -
-                                i - 1]}.${rand.nextInt(10)}cm',
+                            '${i + 1}등 ${Names[i]} : ${randnumbers[dropdownValue - i - 1]}.${rand.nextInt(10)}cm',
                             style: TextStyle(
                               fontFamily: 'jua',
                               fontSize: 40.0,
@@ -76,8 +86,8 @@ class ResultScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
-                          return HomeScreen();
-                        }));
+                      return HomeScreen();
+                    }));
                   },
                   child: Text(
                     '메인 화면',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sequencing_apps/screen/game_screen.dart';
+
+import 'game_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);

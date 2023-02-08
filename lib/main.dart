@@ -19,5 +19,5 @@ void main() {
   );
 }
 // settingsscreen / textfield
-// result manipulation
+// result manipulation (solved)
 // loading screen with duration
